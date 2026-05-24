@@ -94,31 +94,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//	  HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-//	  HAL_Delay(1000);
-	  if(0 == HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin))
-	  {
-		  HAL_Delay(120);
-		  if(0 == HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin))
-		  {
-			  HAL_GPIO_TogglePin(BEEP_GPIO_Port, BEEP_Pin);
-		  }
-	  }
-	  if(0 == HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin))
-	  {
-		  HAL_Delay(120);
-		  if(0 == HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin))
-		  {
-			  HAL_GPIO_TogglePin(LED2_GPIO_Port, LED2_Pin);
-		  }
-	  }
-
-	  if(0 == HAL_GPIO_ReadPin(SUN_GPIO_Port, SUN_Pin))
-	  {
-		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, 1);
-	  }else{
-		  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_5, 0);
-	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -166,7 +141,18 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	HAL_Delay(10);
+	if(HAL_GPIO_ReadPin(EXIT_KEY1_GPIO_Port, EXIT_KEY1_Pin)==0)
+	{
+		HAL_GPIO_TogglePin(BEEP_GPIO_Port, BEEP_Pin);
+	}
+	if(HAL_GPIO_ReadPin(EXTI_KEY2_GPIO_Port, EXTI_KEY2_Pin)==0)
+	{
+		HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+	}
+}
 /* USER CODE END 4 */
 
 /**
